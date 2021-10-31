@@ -31,7 +31,7 @@ def generate_token_list(data_path, tokenizer, save_dir, save=True):
             if len(line) > 0:
                 # Split the line into tokens
                 # Add new line to indicate new line
-                line_token = tokenize_line(tokenizer, line) + ["\n"]
+                line_token = tokenize_line(tokenizer, line)
                 # Append to tokens
                 tokens += line_token
 
@@ -59,3 +59,25 @@ def generate_word2index_mapping(tokens, save_dir, save=True):
         save_as_pickle(word2index, save_dir)
 
     return word2index
+
+
+def generate_ngrams(tokens, save_dir, context_size=4, save=True):
+    '''
+    Create ngram for training
+    ngrams has the following structure (first_n_words, next_n_words)
+    Save if specified
+    '''
+    ngrams = []
+    
+    length_of_token = len(tokens)
+    for index in range(length_of_token - context_size + 1):
+        ngram = (
+            tokens[index : index + context_size + 1],
+            tokens[index + 1 : index + context_size + 2]
+        )
+        ngrams.append(ngram)
+
+    if save:
+        save_as_pickle(ngrams, save_dir)
+
+    return ngrams
