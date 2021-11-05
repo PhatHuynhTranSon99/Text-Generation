@@ -70,7 +70,7 @@ def generate_ngrams(tokens, save_dir, context_size=4, save=True):
     ngrams = []
     
     length_of_token = len(tokens)
-    for index in range(length_of_token - context_size + 1):
+    for index in range(length_of_token - context_size  - 1):
         ngram = (
             tokens[index : index + context_size + 1],
             tokens[index + 1 : index + context_size + 2]
